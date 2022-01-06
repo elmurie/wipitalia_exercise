@@ -5,15 +5,20 @@ const path = require('path');
 module.exports = {
     mode : 'development',
     entry : {
-        app : './src/index.js',
-        profile : './src/profile.js'
+        app : './src/index.js'
     },
     devtool : 'inline-source-map',
     devServer : {
         static: './'
     },
     plugins : [
-        new HtmlWebpackPlugin({}),
+        new HtmlWebpackPlugin({
+            title : 'WIP Italia - Exercise',
+            template : './src/index.html',
+            inject: 'body',
+            filename: 'index.html',
+            myPageHeader: 'My Wonderful Timeline',
+        }),
         new CleanWebpackPlugin()
     ],
     output : {
@@ -23,10 +28,11 @@ module.exports = {
     module : {
         rules : [
             {
-                test : /\.css$/,
+                test : /\.(s(a|c)ss)$/,
                 use : [
                     'style-loader',
-                    'css-loader'
+                    'css-loader',
+                    'sass-loader'
                 ]
             }
         ]

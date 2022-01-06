@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.planet {
+    background-color: purple;
+    width: 50%;
+    color: #fff;
+    &.right {
+        margin-left: auto;
+    }
+}
