@@ -3,6 +3,9 @@ import axios from "axios";
 // https://swapi.dev/api/planets is not working as of now ( 06/01/22, 11:52), so I am using a different API 
 // Found mirror https://swapi.py4e.com/api/planets/ ( 06/01/22, 14:29), seems to be the same data 
 
+const container = document.getElementById('container');
+
+// Date & Time variables 
 let startDate = '';
 let endDate = '';
 
@@ -11,9 +14,12 @@ const searchBtn = document.getElementById('search');
 searchBtn.addEventListener('click', function() {
   filterAxios();
 });
+const orderBtn = document.getElementById('order');
+orderBtn.addEventListener('click', function() {
+  orderAxios(filteredResults);
+});
 
-
-// Input dates elements 
+// Input dates elements & functions
 const startDateInput = document.getElementById('startDate')
 startDateInput.addEventListener('change', (e) => {
   console.log(e.target.value);
@@ -25,6 +31,10 @@ endDateInput.addEventListener('change', (e) => {
   endDate = e.target.value;
 });
 
+function convertDate(date) {
+  return new Date(date); 
+}
+
 // Get data from API call
 function getData() {
   console.log(startDate);
@@ -32,13 +42,15 @@ function getData() {
     method : 'get',
     url : 'https://swapi.dev/api/planets',
   })
-    .then((res) => showData(res.data.results))
+    .then((res) => {
+      showData(res.data.results)
+    })
     .catch(err => console.error(err))
 }
 
 // Display data from API call
 function showData(res) {
-  const container = document.getElementById('container');
+  console.log("showdats",res);
   container.innerHTML = ''; // empties old data in container before it gets updated
   for ( let i = 0; i < res.length; i++) {
     let planetCard = document.createElement('Div');
@@ -58,6 +70,7 @@ function showData(res) {
 // API call on page load 
 getData();
 
+let filteredResults = []
 
 function filterAxios() {
   let planets = [];
@@ -70,21 +83,28 @@ function filterAxios() {
     )
   }
   Promise.all(promises).then(() => {
-    let convertedStartDate = new Date(startDate);
-    let tempEndDate = new Date(endDate);
-    let convertedEndDate = tempEndDate.setHours(23, 59, 59);
-    console.log("boyyyyyy",convertedStartDate, convertedEndDate);
     let allPlanets = [];
     for ( let j = 0; j < planets.length; j++) {
       allPlanets.push(...planets[j]);
     }
+    filteredResults = [];
     let filtered = allPlanets.filter((item) => {
+      let convertedStartDate = convertDate(startDate);
+      let tempEndDate = convertDate(endDate);
+      let convertedEndDate = tempEndDate.setHours(23, 59, 59);
       let convertedCreatedDate = new Date(item.created);
       if ( convertedCreatedDate >= convertedStartDate && convertedCreatedDate <= convertedEndDate) {
-        console.log("convertCreated", convertedCreatedDate);
+        filteredResults.push(item);
         return item;
       }
     })
     showData(filtered);
   });
+}
+
+function orderAxios(array) {
+  console.log("filteresuld", filteredResults)
+  const sortedArray = array.sort((a, b) => -a.created.localeCompare(b.created));
+  console.log(sortedArray);
+  showData(sortedArray);
 }
