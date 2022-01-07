@@ -4,10 +4,22 @@
     box-sizing: border-box;
 }
 .planet {
-    background-color: purple;
-    width: 50%;
+    padding:20px;
+    margin: 5px;
+    // background-color: purple;
     color: #fff;
+    transition: .5s;
     &.right {
         margin-left: auto;
+    }
+    .planet__name {
+        padding: 5px;
+        width: 50%;
+        background-color: red;
+    }
+    .planet__date {
+        padding: 5px;
+        width: 50%;
+        background-color: blue;
     }
 }

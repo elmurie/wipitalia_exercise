@@ -8,12 +8,12 @@
 </head>
 <body>
     <h1><%= htmlWebpackPlugin.options.myPageHeader %></h1>
-    <input type="date" name="" id="">
-    <input type="date" name="" id="">
-    <button>SEARCH</button>
-    <button>CHANGE ORDER</button>
+    <input type="date" name="startDate" id="startDate" min="2014-12-09" max="2014-12-21">
+    <input type="date" name="startDate" id="endDate" min="2014-12-09" max="2014-12-21">
+    <button id="search">SEARCH</button>
+    <button id="order">CHANGE ORDER</button>
     <main>
-
+        <div id="container"></div>
     </main>
 
 </body>
