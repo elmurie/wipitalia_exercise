@@ -50,7 +50,7 @@ function getData() {
 
 // Display data from API call
 function showData(res) {
-  console.log("showdats",res);
+  console.log("filteredResults", filteredResults)
   container.innerHTML = ''; // empties old data in container before it gets updated
   for ( let i = 0; i < res.length; i++) {
     let planetCard = document.createElement('Div');
@@ -58,10 +58,10 @@ function showData(res) {
     container.appendChild(planetCard);
     planetCard.innerHTML = `
     <div class="planet__name">
-    <h2>${res[i].name}</h2>
+      <h2>${res[i].name}</h2>
     </div>
     <div class="planet__date">
-    <h5>${res[i].created.substring(0, 10)} ${res[i].created.substring(11, 16)}</h5>
+      <h5>${res[i].created.substring(0, 10)} ${res[i].created.substring(11, 16)}</h5>
     </div>
     `
   }
@@ -103,8 +103,8 @@ function filterAxios() {
 }
 
 function orderAxios(array) {
-  console.log("filteresuld", filteredResults)
+  filteredResults = [];
+  console.log(array);
   const sortedArray = array.sort((a, b) => -a.created.localeCompare(b.created));
-  console.log(sortedArray);
   showData(sortedArray);
 }
