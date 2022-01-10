@@ -1,4 +1,4 @@
-import './style.scss';
+import './style/style.scss';
 import axios from "axios";
 // https://swapi.dev/api/planets is not working as of now ( 06/01/22, 11:52), so I am using a different API 
 // Found mirror https://swapi.py4e.com/api/planets/ ( 06/01/22, 14:29), seems to be the same data 
@@ -20,6 +20,7 @@ let call = {
 const searchBtn = document.getElementById('search');
 
 searchBtn.addEventListener('click', function() {
+  container.innerHTML = '';
   errorMessage.innerHTML = '';
   let startDate = new Date(startDateInput.value);
   let endDate = new Date(endDateInput.value).setHours(23, 59, 59);
@@ -34,8 +35,8 @@ searchBtn.addEventListener('click', function() {
       let createdPlanet = new Date(planet.created);
       return (createdPlanet >= startDate && createdPlanet <= endDate)
     });
+    showData(call.filteredData);
   }
-  showData(call.filteredData);
 });
 
 // Order button
@@ -75,6 +76,8 @@ function showData(res) {
     container.appendChild(planetCard);
     if ( i % 2 == 0) {
       planetCard.classList.add('right');
+    } else {
+      planetCard.classList.add('left');
     }
     planetCard.innerHTML = `
     <div class="planet__name">
