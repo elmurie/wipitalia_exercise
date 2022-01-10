@@ -1,0 +1,17 @@
+// Colours
+$primaryCard : #003049;
+$primaryFontColor : #fcbf49;
+$secondaryFontColor: #f77f00;
+
+$overlay: rgba(0,0,0,0.6);
+
+// Font-sizes
+$titleFontSize : clamp(2rem, 10vw, 4rem); ;
+
+// Font-families
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@800&family=Fira+Sans:ital,wght@0,500;1,400&family=Pridi&display=swap');
+
+$primaryFont : 'Fira Sans', sans-serif;
+$secondaryFont : 'Pridi', serif;
+$tertiaryFont : 'Assistant', sans-serif;
+
