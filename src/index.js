@@ -5,52 +5,51 @@ import axios from "axios";
 
 const container = document.getElementById('container');
 
-// Date & Time variables 
-let startDate = '';
-let endDate = '';
+// Input dates elements
+const startDateInput = document.getElementById('startDateInput')
+const endDateInput = document.getElementById('endDateInput')
 
-// Buttons 
+// API Call variables
+let call = {
+  incomingData : [],
+  filteredData : []
+};
+
+// Search Button 
 const searchBtn = document.getElementById('search');
 searchBtn.addEventListener('click', function() {
-  filterAxios();
+  let startDate = new Date(startDateInput.value);
+  let endDate = new Date(endDateInput.value).setHours(23, 59, 59);
+  call.filteredData = call.incomingData.filter( planet => {
+    let createdPlanet = new Date(planet.created);
+    return (createdPlanet >= startDate && createdPlanet <= endDate)
+  })
+  showData(call.filteredData);
 });
+
+// Order button
 const orderBtn = document.getElementById('order');
 orderBtn.addEventListener('click', function() {
-  orderAxios(filteredResults);
 });
 
-// Input dates elements & functions
-const startDateInput = document.getElementById('startDate')
-startDateInput.addEventListener('change', (e) => {
-  console.log(e.target.value);
-  startDate = e.target.value;
-});
-const endDateInput = document.getElementById('endDate')
-endDateInput.addEventListener('change', (e) => {
-  console.log(e.target.value);
-  endDate = e.target.value;
-});
 
-function convertDate(date) {
-  return new Date(date); 
-}
+
 
 // Get data from API call
-function getData() {
-  console.log(startDate);
+const getData = (call) => {
   axios({
     method : 'get',
     url : 'https://swapi.dev/api/planets',
   })
     .then((res) => {
-      showData(res.data.results)
+      call.filteredData = call.incomingData = res.data.results;
+      showData(call.filteredData)
     })
     .catch(err => console.error(err))
 }
 
 // Display data from API call
 function showData(res) {
-  console.log("filteredResults", filteredResults)
   container.innerHTML = ''; // empties old data in container before it gets updated
   for ( let i = 0; i < res.length; i++) {
     let planetCard = document.createElement('Div');
@@ -68,43 +67,4 @@ function showData(res) {
 }
 
 // API call on page load 
-getData();
-
-let filteredResults = []
-
-function filterAxios() {
-  let planets = [];
-  let promises = [];
-  for (let i = 1; i <= 6; i++) {
-    promises.push(
-      axios.get(`https://swapi.dev/api/planets?page=${i}`).then(response => {
-        planets.push(response.data.results);
-      })
-    )
-  }
-  Promise.all(promises).then(() => {
-    let allPlanets = [];
-    for ( let j = 0; j < planets.length; j++) {
-      allPlanets.push(...planets[j]);
-    }
-    filteredResults = [];
-    let filtered = allPlanets.filter((item) => {
-      let convertedStartDate = convertDate(startDate);
-      let tempEndDate = convertDate(endDate);
-      let convertedEndDate = tempEndDate.setHours(23, 59, 59);
-      let convertedCreatedDate = new Date(item.created);
-      if ( convertedCreatedDate >= convertedStartDate && convertedCreatedDate <= convertedEndDate) {
-        filteredResults.push(item);
-        return item;
-      }
-    })
-    showData(filtered);
-  });
-}
-
-function orderAxios(array) {
-  filteredResults = [];
-  console.log(array);
-  const sortedArray = array.sort((a, b) => -a.created.localeCompare(b.created));
-  showData(sortedArray);
-}
+getData(call);
