@@ -7,15 +7,22 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
-    <h1><%= htmlWebpackPlugin.options.myPageHeader %></h1>
-    <input type="date" name="startDate" id="startDateInput" min="2014-12-09" max="2014-12-21">
-    <input type="date" name="startDate" id="endDateInput" min="2014-12-09" max="2014-12-21">
-    <button id="search">SEARCH</button>
-    <button id="order">CHANGE ORDER</button>
-    <main>
+    <header>
+        <h1><%= htmlWebpackPlugin.options.myPageHeader %></h1>
+    </header>
+    <section class="inputs">
+        <div class="dates">
+            <input type="date" name="startDate" id="startDateInput" min="2014-12-09" max="2014-12-21">
+            <input type="date" name="startDate" id="endDateInput" min="2014-12-09" max="2014-12-21">
+        </div>
+        <div class="buttons">
+            <button id="search">SEARCH</button>
+            <button id="order">ORDER</button>
+        </div>
         <div id="error"></div>
+    </section>
+    <main>
         <div id="container"></div>
     </main>
-
 </body>
 </html>
