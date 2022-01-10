@@ -4,10 +4,11 @@ import axios from "axios";
 // Found mirror https://swapi.py4e.com/api/planets/ ( 06/01/22, 14:29), seems to be the same data 
 
 const container = document.getElementById('container');
+const errorMessage = document.getElementById('error');
 
 // Input dates elements
-const startDateInput = document.getElementById('startDateInput')
-const endDateInput = document.getElementById('endDateInput')
+const startDateInput = document.getElementById('startDateInput');
+const endDateInput = document.getElementById('endDateInput');
 
 // API Call variables
 let call = {
@@ -17,20 +18,34 @@ let call = {
 
 // Search Button 
 const searchBtn = document.getElementById('search');
+
 searchBtn.addEventListener('click', function() {
+  errorMessage.innerHTML = '';
   let startDate = new Date(startDateInput.value);
   let endDate = new Date(endDateInput.value).setHours(23, 59, 59);
-  call.filteredData = call.incomingData.filter( planet => {
-    let createdPlanet = new Date(planet.created);
-    return (createdPlanet >= startDate && createdPlanet <= endDate)
-  })
+  if ( isNaN(startDate) || isNaN(endDate) ) {
+    errorMessage.innerHTML = 'Please choose a start and an end date';
+    
+  }
+  else {
+    call.filteredData = call.incomingData.filter( planet => {
+      let createdPlanet = new Date(planet.created);
+      return (createdPlanet >= startDate && createdPlanet <= endDate)
+    });
+  }
   showData(call.filteredData);
 });
 
 // Order button
 const orderBtn = document.getElementById('order');
+
 orderBtn.addEventListener('click', function() {
+  call.filteredData = call.filteredData.sort((a, b) => {
+    return b.created - a.created;
+  })
+  showData(call.filteredData);
 });
+
 
 
 
