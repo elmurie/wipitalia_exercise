@@ -1,0 +1,146 @@
+@import './variables.scss';
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: $overlay;
+    background-image: url('https://i.imgur.com/h9718eW.jpg');
+    background-size: 2560px 1600px;
+    background-repeat: no-repeat;
+    background-blend-mode: multiply;
+    font-family: $primaryFont;
+
+    header,
+    .inputs {
+        text-align: center;
+    }
+
+    header {
+        padding: 10px;
+        h1 {
+            color: $secondaryFontColor;
+            font-size: $titleFontSize;
+            font-family: $tertiaryFont;
+        }
+    }
+    .inputs {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        .dates,
+        .buttons,
+        #error {
+            text-align: center;
+            width: 300px;
+        }
+        .dates {
+            margin: 5px 0 5px 7px;
+        }
+        #error {
+            display: block;
+            margin: 20px 0;
+            text-align: center;
+            color: $secondaryFontColor;
+        }
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+        overflow-x: hidden;
+        
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 50%;
+            padding: 20px 0;
+
+            .planet {
+                width: 200px;
+                color: $primaryFontColor;
+                margin: 15px 0;
+                background-color: $primaryCard;
+                border-radius: 10px;
+                &.left {
+                    padding-right: 20px;
+                    text-align: right;
+                    animation : fromLeft 1s ease-out forwards;
+                    @for $i from 1 through 25 {
+                        &:nth-child(#{$i}) {
+                            animation-delay: 50ms * $i;
+                        }
+                    } 
+                }
+
+                &.right {
+                    padding-left: 20px;
+                    text-align: left;
+                    animation : fromRight 1s ease-out forwards;
+                    @for $i from 1 through 20 {
+                        &:nth-child(#{$i}) {
+                            animation-delay: 50ms * $i;
+                        }
+                    } 
+                }
+
+                .planet__name {
+                    padding: 5px;
+                    font-weight: 500;
+                }
+                .planet__date {
+                    padding: 5px;
+                    font-family: $secondaryFont;
+                }
+            }
+        }
+    }
+}
+
+// Animations
+
+@keyframes fromLeft {
+    from {
+            opacity: 0;
+            transform: translateX(-400%);
+        }
+    to {
+            opacity: 1;
+            transform: translateX(-50%);
+    }
+}
+@keyframes fromRight {
+    from {
+            opacity: 0;
+            transform: translateX(400%);
+        }
+    to {
+            opacity: 1;
+            transform: translateX(50%);
+    }
+}
+
+// Buttons 
+
+button {
+    outline: none;
+    border : none;
+    background-color: $primaryFontColor;
+    color: $primaryCard;
+    font-size: 1rem;
+    padding: 5px;
+    font-weight: 600;
+    border-radius: 5px;
+}
+
+[type="date"] {
+    border-radius: 5px;
+    padding: .3125rem;
+}
+
