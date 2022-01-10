@@ -26,6 +26,8 @@ searchBtn.addEventListener('click', function() {
   if ( isNaN(startDate) || isNaN(endDate) ) {
     errorMessage.innerHTML = 'Please choose a start and an end date';
     
+  } else if ( startDate > endDate ) {
+    errorMessage.innerHTML = 'Start date cannot be later than end date'
   }
   else {
     call.filteredData = call.incomingData.filter( planet => {
@@ -40,8 +42,9 @@ searchBtn.addEventListener('click', function() {
 const orderBtn = document.getElementById('order');
 
 orderBtn.addEventListener('click', function() {
+  errorMessage.innerHTML = '';
   call.filteredData = call.filteredData.sort((a, b) => {
-    return b.created - a.created;
+    return new Date(b.created) - new Date(a.created);
   })
   showData(call.filteredData);
 });
@@ -70,6 +73,9 @@ function showData(res) {
     let planetCard = document.createElement('Div');
     planetCard.className = 'planet';
     container.appendChild(planetCard);
+    if ( i % 2 == 0) {
+      planetCard.classList.add('right');
+    }
     planetCard.innerHTML = `
     <div class="planet__name">
       <h2>${res[i].name}</h2>
