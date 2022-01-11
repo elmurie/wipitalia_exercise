@@ -49,7 +49,7 @@ body {
             color: $secondaryFontColor;
         }
     }
-
+    
     main {
         display: flex;
         justify-content: center;
@@ -61,13 +61,20 @@ body {
             align-items: center;
             width: 50%;
             padding: 20px 0;
-
+            @media screen and (max-width: 480px) {
+                width: 100%;
+                padding: 20px;
+            }
+            
             .planet {
                 width: 200px;
                 color: $primaryFontColor;
                 margin: 15px 0;
                 background-color: $primaryCard;
                 border-radius: 10px;
+                @media screen and (max-width: 480px) {
+                        width: 100%;
+                }
                 &.left {
                     padding-right: 20px;
                     text-align: right;
@@ -76,6 +83,12 @@ body {
                         &:nth-child(#{$i}) {
                             animation-delay: 50ms * $i;
                         }
+                    }
+                    @media screen and (max-width: 480px) {
+                        animation: none;
+                        text-align: left;
+                        padding-right: 0;
+                        padding-left: 20px;
                     } 
                 }
 
@@ -87,7 +100,10 @@ body {
                         &:nth-child(#{$i}) {
                             animation-delay: 50ms * $i;
                         }
-                    } 
+                    }
+                    @media screen and (max-width: 480px) {
+                        animation: none;;
+                    }  
                 }
 
                 .planet__name {
@@ -107,26 +123,28 @@ body {
 
 @keyframes fromLeft {
     from {
-            opacity: 0;
-            transform: translateX(-400%);
-        }
+        opacity: 0;
+        transform: translateX(-400%);
+    }
     to {
-            opacity: 1;
-            transform: translateX(-50%);
+        opacity: 1;
+        transform: translateX(-50%);
     }
 }
 @keyframes fromRight {
     from {
-            opacity: 0;
-            transform: translateX(400%);
-        }
-    to {
-            opacity: 1;
-            transform: translateX(50%);
+        opacity: 0;
+        transform: translateX(400%);
     }
+    to {
+        opacity: 1;
+        transform: translateX(50%);
+    }
+    // Media query
+    
 }
 
-// Buttons 
+// Buttons and inputs
 
 button {
     outline: none;
@@ -143,4 +161,3 @@ button {
     border-radius: 5px;
     padding: .3125rem;
 }
-
