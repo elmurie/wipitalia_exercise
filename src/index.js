@@ -1,7 +1,7 @@
 import './style/style.scss';
 import axios from "axios";
-// https://swapi.dev/api/planets is not working as of now ( 06/01/22, 11:52), so I am using a different API 
-// Found mirror https://swapi.py4e.com/api/planets/ ( 06/01/22, 14:29), seems to be the same data 
+
+// Planets Container and error field
 
 const container = document.getElementById('container');
 const errorMessage = document.getElementById('error');
@@ -13,7 +13,8 @@ const endDateInput = document.getElementById('endDateInput');
 // API Call variables
 let call = {
   incomingData : [],
-  filteredData : []
+  filteredData : [],
+  ordered : false
 };
 
 // Search Button 
@@ -45,8 +46,13 @@ const orderBtn = document.getElementById('order');
 orderBtn.addEventListener('click', function() {
   errorMessage.innerHTML = '';
   call.filteredData = call.filteredData.sort((a, b) => {
-    return new Date(b.created) - new Date(a.created);
+    if ( call.ordered ) {
+      return new Date(a.created) - new Date(b.created);
+    } else {
+      return new Date(b.created) - new Date(a.created);
+    }
   })
+  call.ordered ^= true;
   showData(call.filteredData);
 });
 
