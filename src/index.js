@@ -56,12 +56,9 @@ orderBtn.addEventListener('click', function() {
   showData(call.filteredData);
 });
 
-
-
-
-
 // Get data from API call
 const getData = (call) => {
+  errorMessage.innerHTML = '';
   axios({
     method : 'get',
     url : 'https://swapi.dev/api/planets',
@@ -70,7 +67,10 @@ const getData = (call) => {
       call.filteredData = call.incomingData = res.data.results;
       showData(call.filteredData)
     })
-    .catch(err => console.error(err))
+    .catch(err => {
+      console.error(err);
+      errorMessage.innerHTML = 'API resource not responding';
+    })
 }
 
 // Display data from API call
