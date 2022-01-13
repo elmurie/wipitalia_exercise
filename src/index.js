@@ -61,7 +61,7 @@ const getData = (call) => {
   errorMessage.innerHTML = '';
   axios({
     method : 'get',
-    url : 'https://swapi.dev/api/planets',
+    url : 'https://swapi.dev/api/planets', // alternative URL https://swapi.py4e.com/api/planets/ 
   })
     .then((res) => {
       call.filteredData = call.incomingData = res.data.results;
